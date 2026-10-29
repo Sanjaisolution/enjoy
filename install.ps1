@@ -75,7 +75,7 @@ $License = @{
     api_key = $StudentApiKey
 } | ConvertTo-Json
 
-Set-Content -Path "$TargetDir\license.dat" -Value $License -Encoding UTF8
+[System.IO.File]::WriteAllText("$TargetDir\license.dat", $License, [System.Text.UTF8Encoding]::new($false))
 Write-Host "[+] Hardware lock and API key bound permanently." -ForegroundColor Green
 
 # 9. Create Desktop Shortcut
@@ -85,6 +85,7 @@ $Desktop = [System.Environment]::GetFolderPath('Desktop')
 $Shortcut = $WshShell.CreateShortcut("$Desktop\StealthBridge.lnk")
 $Shortcut.TargetPath = $TargetExe
 $Shortcut.WorkingDirectory = $TargetDir
+$Shortcut.IconLocation = "$TargetExe,0"
 $Shortcut.Description = "StealthBridge Engine"
 $Shortcut.Save()
 
