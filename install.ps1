@@ -68,7 +68,7 @@ $Payload = [System.Text.Encoding]::UTF8.GetBytes($PayloadStr)
 $SigBytes = $HMAC.ComputeHash($Payload)
 $Signature = [System.BitConverter]::ToString($SigBytes).Replace("-", "").ToLower()
 
-# 8. Write Locked License File
+# 8. Write Locked License File (Pure UTF-8 without BOM)
 $License = @{
     hwid    = $HWID
     token   = $Signature
@@ -94,3 +94,4 @@ Write-Host "   [+] Installation completed successfully!               " -Foregro
 Write-Host "   [+] StealthBridge icon created on the Desktop.         " -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Green
 Start-Sleep -Seconds 3
+
